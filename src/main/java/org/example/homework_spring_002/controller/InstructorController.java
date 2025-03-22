@@ -30,13 +30,12 @@ public class InstructorController {
     ){
         ApiInstructorResponse<List<Instructor>> apiInstructorResponse = ApiInstructorResponse.<List<Instructor>>builder()
                 .message("All instructors have been successfully fetched.")
-                .payload(instructorService.addInstructor(page, size))
+                .payload(instructorService.getAllInstructor(page, size))
                 .status(HttpStatus.OK)
                 .timestamp(LocalDateTime.now())
                 .build();
         return ResponseEntity.ok(apiInstructorResponse);
     }
-
 
     @PostMapping
     @Operation(summary = "Add instructor")
@@ -70,6 +69,19 @@ public class InstructorController {
         ApiInstructorResponse<List<Instructor>> apiInstructorResponse = ApiInstructorResponse.<List<Instructor>>builder()
                 .message("The instructor has been successfully updated.")
                 .payload(instructorService.updateInstructor(id,instructorRequest))
+                .status(HttpStatus.OK)
+
+                .timestamp(LocalDateTime.now())
+                .build();
+        return ResponseEntity.ok(apiInstructorResponse);
+    }
+
+    @DeleteMapping("{instructor-id}")
+    @Operation(summary = "Delete instructor")
+    ResponseEntity<ApiInstructorResponse<List<Instructor>>> deleteInstructor(@PathVariable("instructor-id") Integer id) {
+        ApiInstructorResponse<List<Instructor>> apiInstructorResponse = ApiInstructorResponse.<List<Instructor>>builder()
+                .message("The instructor has been successfully removed.")
+                .payload(instructorService.deleteInstructor(id))
                 .status(HttpStatus.OK)
                 .timestamp(LocalDateTime.now())
                 .build();

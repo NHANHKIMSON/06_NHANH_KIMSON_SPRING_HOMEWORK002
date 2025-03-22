@@ -16,7 +16,7 @@ public class InstructorImpl implements InstructorService {
         this.instructorRepository = instructorRepository;
     }
     @Override
-    public List<Instructor> addInstructor(int page, int size) {
+    public List<Instructor> getAllInstructor(int page, int size) {
         int offset = (page - 1) * size;
         return instructorRepository.getAllInstructor(size, offset);
     }
@@ -29,5 +29,9 @@ public class InstructorImpl implements InstructorService {
     }
     public List<Instructor> updateInstructor(Integer id, InstructorRequest instructorRequest) {
         return instructorRepository.updateInstructor(id, instructorRequest);
+    }
+    @Override
+    public List<Instructor> deleteInstructor(Integer id) {
+        return instructorRepository.deleteInstructorById(id);
     }
 }

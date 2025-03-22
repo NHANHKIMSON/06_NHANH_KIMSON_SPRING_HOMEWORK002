@@ -11,17 +11,14 @@ import java.util.List;
 @Mapper
 public interface InstructorRepository {
     @Select("""
-    SELECT * FROM instructor 
+    SELECT * FROM instructor\s
     LIMIT #{limit} OFFSET #{offset}
-    """)
+   \s""")
     @Results(id="instructorMapper" , value = {
             @Result(property = "instructorId", column ="instructor_id" ),
             @Result(property = "instructorName", column = "instructor_name")
     })
     List<Instructor> getAllInstructor(int limit, int offset);
-
-
-
     @Select("""
             INSERT INTO instructor (instructor_name, email) 
             VALUES (#{InstructorRequest.instructorName}, #{InstructorRequest.email})
@@ -36,8 +33,15 @@ public interface InstructorRepository {
     List<Instructor> getInstructorById(Integer id);
 
     @Select("""
-    UPDATE instructor SET instructor_name = #{InstructorRequest.instructorName} WHERE instructor_id = #{id}
+    UPDATE instructor SET instructor_name = #{InstructorRequest.instructorName}, email = #{InstructorRequest.email}
+                      WHERE instructor_id = #{id}
     RETURNING * """)
     @ResultMap("instructorMapper")
     List<Instructor> updateInstructor(@Param("id") Integer id, @Param("InstructorRequest") InstructorRequest instructorRequest);
+
+    @Select("""
+    DELETE FROM instructor WHERE instructor_id = #{id}
+    RETURNING * """)
+    @ResultMap("instructorMapper")
+    List<Instructor> deleteInstructorById(Integer id);
 }
