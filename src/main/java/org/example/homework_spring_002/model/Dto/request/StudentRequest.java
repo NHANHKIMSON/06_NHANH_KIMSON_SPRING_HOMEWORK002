@@ -13,8 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class StudentRequest {
-    private String StudentName;
-    private String email;
+
+    private String studentName;
     private String phoneNumber;
+    private String email;
     private List<Integer> courses;
+
 }
