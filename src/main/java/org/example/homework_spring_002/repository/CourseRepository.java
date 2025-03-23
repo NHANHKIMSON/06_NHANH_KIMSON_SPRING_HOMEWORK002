@@ -32,6 +32,7 @@ public interface CourseRepository {
 
     @Select("""
             DELETE FROM course WHERE course_id = #{id}
+            RETURNING *
             """)
     @ResultMap("courseRequest")
     List<Course> deleteCourse(@Param("id") Integer id);
@@ -44,12 +45,24 @@ public interface CourseRepository {
     @ResultMap("courseRequest")
     List<Course> addCourse(@Param("courseRequest") CourseRequest courseRequest);
 
+    @Insert("""
+    INSERT INTO student_course(student_id, course_id)
+    VALUES (#{studentId},#{courseId})
+    """)
+    void insertStudentCourse(Integer studentId, Integer courseId);
+
+    @Delete("""
+    DELETE FROM student_course WHERE student_id = #{studentId}
+    """)
+    void deleteStudentCourse(Integer studentId);
+
+
 
     @Select("""
     UPDATE course SET course_name = #{courseRequest.courseName}, description = #{courseRequest.description}, instructor_id = #{courseRequest.instructorId}  WHERE course_id = #{id}
     RETURNING * """)
     @ResultMap("courseRequest")
-    List<Course> updateCourse(Integer id,  @Param("courseRequest") CourseRequest courseRequest);
+    List<Course> updateCourse(Integer studentId, @Param("courseRequest")  CourseRequest courseRequest);
 
 
     @Select("""

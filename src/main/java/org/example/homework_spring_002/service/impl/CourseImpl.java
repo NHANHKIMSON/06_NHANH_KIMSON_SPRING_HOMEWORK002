@@ -46,4 +46,5 @@ public class CourseImpl implements CourseService {
     public List<Course> updateCourse(Integer id, CourseRequest courseRequest) {
         return courseRepository.updateCourse(id, courseRequest);
     }
+
 }
