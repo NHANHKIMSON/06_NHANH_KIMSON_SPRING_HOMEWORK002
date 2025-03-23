@@ -62,7 +62,7 @@ public interface CourseRepository {
     UPDATE course SET course_name = #{courseRequest.courseName}, description = #{courseRequest.description}, instructor_id = #{courseRequest.instructorId}  WHERE course_id = #{id}
     RETURNING * """)
     @ResultMap("courseRequest")
-    List<Course> updateCourse(Integer studentId, @Param("courseRequest")  CourseRequest courseRequest);
+    List<Course> updateCourse(Integer id, @Param("courseRequest")  CourseRequest courseRequest);
 
 
     @Select("""
